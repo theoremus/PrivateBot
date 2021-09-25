@@ -1,10 +1,10 @@
 {
   "name": "PrivateBot",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
@@ -12,5 +12,17 @@
   "dependencies": {
     "discord.js": "^13.1.0",
     "express": "^4.17.1"
-  }
+  },
+  "devDependencies": {
+    "node": "^16.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theoremus/PrivateBot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/theoremus/PrivateBot/issues"
+  },
+  "homepage": "https://github.com/theoremus/PrivateBot#readme",
+  "description": ""
 }
