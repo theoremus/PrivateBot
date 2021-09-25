@@ -38,7 +38,7 @@ const commandsEmbed = new Discord.MessageEmbed()
   .setDescription("Below you will see the available commands of our Bot!")
   .addFields(
     { name: "Utilities", value: "`!help`, `!ping`, `!prefix`" },
-    { name: "Command Category 2", value: "Commands" },
+    { name: "Apps", value: "`!weather`" },
     { name: "Command Category 3", value: "Some other Commands" }
   )
   .setTimestamp();
@@ -59,7 +59,7 @@ async function getWeather(message, location) {
 	            .addFields(
 		            { name: '🌡 Temperature:', value: `${body.current.temp_c} °C/${body.current.temp_f} °F`, inline: true },
 		            { name: '🤷 Feels like:', value: `${body.current.feelslike_c} °C/${body.current.feelslike_f} °F`, inline:true },
-		            { name: '🌧 Precip:', value: `${body.current.precip_mm} mm/${body.current.precip_in} in`, inline: true },
+		            { name: '🌧 Precipitation:', value: `${body.current.precip_mm} mm/${body.current.precip_in} in`, inline: true },
 		            { name: '⛅ Cloudcover:', value: `${body.current.cloud}%`, inline: true },
                 { name: '👁 Visibility:', value: `${body.current.vis_km} km/${body.current.vis_miles} mi`, inline: true },
                 { name: '🗜 Pressure:', value: `${body.current.pressure_mb} mbar/${body.current.pressure_in} in`, inline: true }
