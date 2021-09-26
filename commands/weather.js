@@ -50,31 +50,40 @@ getWeatherEmbed = (body) => {
 	.setFooter(`Last updated: ${body.current.last_updated}`);
 }
 
-exports.getWeather = async (message, location) => {
-  console.log(`WeatherAPI: Request current weather data for ${location} on behalf of ${message.author.username}`)
-  await axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_TOKEN}&q=${location}&aqi=no`)
+getWeather = async (message, location) => {
+  console.log(
+    `WeatherAPI: Request current weather data for ` + 
+    `${location} on behalf of ${message.author.username}`
+  )
+  await axios.get(
+    `http://api.weatherapi.com/v1/current.json?key=` +
+    `${process.env.WEATHER_TOKEN}&q=${location}&aqi=no`
+    )
     .then(data => data.data)
     .then(body => 
       {
         message.reply({embeds: [getWeatherEmbed(body)]})
-          .then(console.log)
           .catch(console.error);
       }
     )
-    .then(console.log)
     .catch(console.error);
 }
 
-getPongEmbed = (message) => {
-  return new MessageEmbed()
-    .setTitle(`🏓  **Pong** `)
-    .setDescription(`**Latency:** ${Date.now() - message.createdTimestamp} ms`)
-    .setColor('#0099ff')
+exports.execute = (client, message, args) => 
+{
+  if (args.length == 0) {
+    message.reply(
+      `Please provide a valid location for your request, ` +
+      `i.e. \`!weather <location>\``
+    )
+    .catch(console.error);
+  } else {
+    getWeather(message, args[0]);
+  }
 }
 
-exports.getPong = (message) => {
-  message.reply({
-      content: `${message.author}`,
-      embeds: [getPongEmbed(message)]
-  });
+exports.help = {
+  name: '`weather`',
+  description: 'Provides the current weather for the given location',
+  usage: 'weather <location>'
 }
