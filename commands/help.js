@@ -1,8 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 
 exports.execute = (client, message, args) => {
-  var prefix = "!";
-  client.config.get("prefix").then(value => prefix = value );
   const embed = new MessageEmbed()
     .setColor('#e056fd')
   if (!args[0]) {
@@ -17,7 +15,7 @@ exports.execute = (client, message, args) => {
           {
             return { 
               name: `⚙️ **Command:** **${cmd.help.name}**`, 
-              value: `**Description:** *${cmd.help.description}*\n**Usage:** \`${prefix}${cmd.help.usage}\``,
+              value: `**Description:** *${cmd.help.description}*\n**Usage:** \`${client.prefix}${cmd.help.usage}\``,
               inline: false 
             }
           }
@@ -28,7 +26,7 @@ exports.execute = (client, message, args) => {
     if (!cmd) {
       message.channel.send(
         `The command ${cmd} is unknown!` + 
-        `To list all commands, write: \`${prefix}help\``
+        `To list all commands, write: \`${client.prefix}help\``
       );
       return 0
     }
@@ -39,7 +37,7 @@ exports.execute = (client, message, args) => {
         `**Description:**  *${cmd.help.description}*\n**Usage:** \`${prefix}${cmd.help.usage}\``
       )
   }
-  embed.addField('\u200b', `__**Current Prefix**__: \`${ prefix }\``)
+  embed.addField('\u200b', `__**Current Prefix**__: \`${client.prefix}\``)
   message.reply({ embeds: [embed] })
     .catch(console.error);
   return 0

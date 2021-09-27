@@ -24,12 +24,16 @@ client.commands = new Discord.Collection()
 //create configuration database
 client.config = new Database();
 // local functions
-let prefix = "!";
-console.log(`The prefix is set to ${prefix}`);
+client.prefix = "!";
+client.config.get("prefix").then(value => 
+  {
+    client.prefix = value;
+    console.log(`Prefix set to: ${value}`);
+  });
 
 // load all files with commands
 fs.readdir('./commands/', (err, files) => {
-  if (err) return console.error(err)
+  if (err) return console.error(err);
   files.forEach(file => {
     if (!file.endsWith('.js')) return;
     const props = require(`./commands/${ file }`);
@@ -38,16 +42,16 @@ fs.readdir('./commands/', (err, files) => {
     client.commands.set(commandName, props);
   })
   return 0;
-})
+});
 
 // on command
 client.on("messageCreate", message => {
   // ignore bot messages, PM and messages without prefix
   if (message.author.bot) return
   if (!message.guild) return
-  if (!message.content.startsWith(prefix)) return
+  if (!message.content.startsWith(client.prefix)) return
   // get command and arguments
-  var args = message.content.slice(prefix.length).trim().split(" ");
+  var args = message.content.slice(client.prefix.length).trim().split(" ");
   var command = args.shift().toLowerCase();
   console.log(`Identified command: ${command}`);
 
@@ -62,7 +66,6 @@ client.on("messageCreate", message => {
 client.on("ready", () => 
   { 
     console.log(client.user.username + " is ready!");
-    client.config.set("prefix", "!");
   });
 // login client
 client.login(process.env.TOKEN);

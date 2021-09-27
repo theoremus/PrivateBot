@@ -1,16 +1,13 @@
 exports.execute = (client, message, args) => 
 {
-  var prefix = "!"
-  //client.config.get("prefix", {raw: true}).then(value => prefix = value );
   if (args.length != 0 && message.member.permissions.any("ADMINISTRATORS")) {
-    console.log(args);
-    prefix = args[0];
-    //client.config.set("prefix", prefix);
-    message.reply(`The new prefix is: \`${prefix}\``)
+    client.config.set("prefix", args[0]).then(() => {console.log(`Prefix: \'${args[0]}\' was set in database`)});
+    client.prefix = args[0];
+    message.reply(`The new prefix is: \`${client.prefix}\``)
       .catch(console.error);
   } else {
     message.reply(
-      `The active prefix is: \`${prefix}\`` +
+      `The active prefix is: \`${client.prefix}\`` +
       `\nTo assign a new prefix provide an option, i.e. ` +
       `\`!prefix <new prefix>\`\nIf this does not work, ` + 
       `you might have insufficient permissions.`
